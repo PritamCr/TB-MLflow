@@ -1,0 +1,26 @@
+stages:
+  train:
+    cmd: python src/train.py
+    deps:
+      - src/train.py
+      - Data/raw
+      - params.yaml
+    params:
+      - data
+      - train
+      - model
+      - loss
+    outs:
+      - models/tb_classifier_model.h5
+
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+      - src/evaluate.py
+      - models/tb_classifier_model.h5
+      - Data/raw
+      - params.yaml
+    params:
+      - data
+    metrics:
+      - metrics/metrics.json

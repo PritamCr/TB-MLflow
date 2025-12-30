@@ -1,0 +1,75 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: Data/raw
+      hash: md5
+      md5: 929d68b274ff1142e8d9676c9dc34c39.dir
+      size: 694557767
+      nfiles: 4200
+    - path: params.yaml
+      hash: md5
+      md5: 1a284e1ba71a18d4f7ee2b1550d73a8a
+      size: 278
+    - path: src/train.py
+      hash: md5
+      md5: fb0d057d61fd4a66c2c0bc48b0b8a6d5
+      size: 2776
+    params:
+      params.yaml:
+        data:
+          img_height: 224
+          img_width: 224
+          validation_split: 0.2
+        loss:
+          focal:
+            gamma: 2.0
+            alpha: 0.25
+        model:
+          conv_filters:
+          - 32
+          - 64
+          - 128
+          dense_units: 128
+          output_units: 1
+        train:
+          batch_size: 32
+          epochs: 3
+          optimizer: adam
+    outs:
+    - path: models/tb_classifier_model.h5
+      hash: md5
+      md5: bd2d5eb534d29ecb877eae2006e3550c
+      size: 134075368
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: Data/raw
+      hash: md5
+      md5: 929d68b274ff1142e8d9676c9dc34c39.dir
+      size: 694557767
+      nfiles: 4200
+    - path: models/tb_classifier_model.h5
+      hash: md5
+      md5: bd2d5eb534d29ecb877eae2006e3550c
+      size: 134075368
+    - path: params.yaml
+      hash: md5
+      md5: 1a284e1ba71a18d4f7ee2b1550d73a8a
+      size: 278
+    - path: src/evaluate.py
+      hash: md5
+      md5: e93d4994959737c0f76304e7a1dabef7
+      size: 1439
+    params:
+      params.yaml:
+        data:
+          img_height: 224
+          img_width: 224
+          validation_split: 0.2
+    outs:
+    - path: metrics/metrics.json
+      hash: md5
+      md5: 0fd316636620171421a4873551b1e14c
+      size: 76

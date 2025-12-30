@@ -1,0 +1,22 @@
+data:
+  img_height: 224
+  img_width: 224
+  validation_split: 0.2
+
+train:
+  batch_size: 32
+  epochs: 3
+  optimizer: adam
+
+model:
+  conv_filters:
+    - 32
+    - 64
+    - 128
+  dense_units: 128
+  output_units: 1
+
+loss:
+  focal:
+    gamma: 2.0
+    alpha: 0.25
